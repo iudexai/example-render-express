@@ -1,14 +1,31 @@
-const express = require("express");
-const app = express();
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const iudex_1 = require("iudex");
+(0, iudex_1.instrument)({
+    serviceName: 'example-render-express',
+    publicWriteOnlyIudexApiKey: 'ixk_c5aa7b98d9075208c7f425f8f02fccfaf0cba66ca91644404d3968fd83b0a14e',
+    githubUrl: 'https://github.com/iudexai/example-render-express',
+    env: 'production',
+});
+const pino_1 = __importDefault(require("pino"));
+const express_1 = __importDefault(require("express"));
+const logger = (0, pino_1.default)(...iudex_1.iudexPino.args);
+const app = (0, express_1.default)();
 const port = process.env.PORT || 3001;
-
-app.get("/", (req, res) => res.type('html').send(html));
-
+app.get('/', (req, res) => res.type('html').send(html));
+app.post('/hello', (req, res) => {
+    logger.info('received POST request', { ctx: req });
+    logger.info('doing stuff...');
+    const hello = { hello: 'world' };
+    logger.info('done doing stuff', { ctx: hello });
+    return res.type('json').send(hello);
+});
 const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-
 server.keepAliveTimeout = 120 * 1000;
 server.headersTimeout = 120 * 1000;
-
 const html = `
 <!DOCTYPE html>
 <html>
@@ -58,4 +75,4 @@ const html = `
     </section>
   </body>
 </html>
-`
+`;
