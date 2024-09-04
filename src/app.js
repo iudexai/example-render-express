@@ -18,7 +18,7 @@ const port = process.env.PORT || 3001;
 app.get('/', (req, res) => res.type('html').send(html));
 app.post('/hello', (req, res) => {
     logger.info('received POST request', { ctx: req });
-    logger.info('doing stuff...');
+    console.log('doing stuff...');
     const hello = { hello: 'world' };
     logger.info('done doing stuff', { ctx: hello });
     return res.type('json').send(hello);

@@ -19,7 +19,7 @@ app.get('/', (req: Request, res: Response) => res.type('html').send(html));
 
 app.post('/hello', (req: Request, res: Response) => {
   logger.info('received POST request', { ctx: req });
-  logger.info('doing stuff...');
+  console.log('doing stuff...')
   const hello = { hello: 'world' };
   logger.info('done doing stuff', { ctx: hello });
   return res.type('json').send(hello);
