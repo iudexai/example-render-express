@@ -21,7 +21,8 @@ app.post('/hello', (req, res) => {
     console.log('doing stuff...');
     const hello = { hello: 'world' };
     logger.info('done doing stuff', { ctx: hello });
-    return res.type('json').send(hello);
+    res.type('json').send(hello);
+    logger.info('does it work after?', { ctx: hello });
 });
 const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 server.keepAliveTimeout = 120 * 1000;
